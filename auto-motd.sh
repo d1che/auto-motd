@@ -24,10 +24,11 @@ done
 if [ ${#depsToInstall[@]} -gt 0 ]; then
   echo "This program will install the following dependencies: $depsToInstall"
   confirm "Do you want to continue?" && {
-    apt update && {
+    echo "updating package lists"
+    apt update > /dev/null 2>&1 && {
       for dep in $depsToInstall; do
-        echo "installing $dep..."
-        apt install $dep -y
+        echo "installing $dep"
+        apt install $dep -y > /dev/null 2>&1
       done
     }
   } || exit 0
@@ -75,5 +76,9 @@ confirm "Are you sure you want to set this as your new motd?" && {
   cp motd /etc
 }
 
+echo "removing temp files"
 rm $font.flf
 rm motd
+
+echo "uninstalling figlet"
+apt remove figlet -y > /dev/null 2>&1
