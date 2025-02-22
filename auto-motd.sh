@@ -57,7 +57,7 @@ done
 
 wget -O $font.flf http://www.figlet.org/fonts/$font.flf > /dev/null 2>&1
 echo -e "\n" > motd
-figlet "$title" -f $font >> motd
+figlet "$title" -f $font -w 240 >> motd
 
 # add space in front of each line
 sed -i -e 's/^/   /' motd
